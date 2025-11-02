@@ -18,17 +18,20 @@
   }
 
   .card {
-    background: rgba(255, 255, 255, 0.15);
-    padding: 50px 70px;
-    border-radius: 25px;
-    box-shadow: 0 0 40px rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(10px);
-    text-align: center;
-    max-width: 500px;
-    animation: fadeIn 2s ease;
-    position: relative;
-    z-index: 3;
-  }
+  background: rgba(255, 255, 255, 0.08); /* more transparent */
+  padding: 50px 70px;
+  border-radius: 25px;
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.2); /* softer glow */
+  backdrop-filter: blur(4px); /* reduced blur */
+  -webkit-backdrop-filter: blur(4px);
+  text-align: center;
+  max-width: 500px;
+  animation: fadeIn 2s ease;
+  position: relative;
+  z-index: 3;
+  border: 1px solid rgba(255, 255, 255, 0.2); /* adds subtle glass edge */
+}
+
 
   h1, p, h2, .love-message, .broken-message, .signature {
     font-weight: 700;
