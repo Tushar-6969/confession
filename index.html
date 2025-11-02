@@ -27,7 +27,7 @@
     max-width: 500px;
     animation: fadeIn 2s ease;
     position: relative;
-    z-index: 2;
+    z-index: 3;
   }
 
   h1, p, h2, .love-message, .broken-message, .signature {
@@ -71,6 +71,19 @@
     top: 0px;
   }
 
+  #date {
+    background-color: #ffffff;
+    color: #ff4b6e;
+    left: 230px;
+    top: 0px;
+  }
+
+  #date:hover {
+    background-color: #ff4b6e;
+    color: #fff;
+    transform: scale(1.1);
+  }
+
   .heart {
     position: fixed;
     color: #ffdde1;
@@ -99,23 +112,24 @@
 
   .broken-message { color: #ff4b6e; }
 
-  /* ❤️ Love image styling */
+  /* ❤️ Fullscreen Image Styling */
   .love-image {
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    max-width: 70%;
-    border-radius: 20px;
-    box-shadow: 0 0 40px rgba(255, 255, 255, 0.6);
+    transform: translate(-50%, -50%) scale(1);
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
     opacity: 0;
-    z-index: 5;
-    transition: opacity 1.5s ease;
-    pointer-events: none;
+    z-index: 1;
+    filter: brightness(0.7) blur(3px);
+    transition: opacity 1.5s ease, transform 8s ease;
   }
 
   .love-image.show {
     opacity: 1;
+    transform: translate(-50%, -50%) scale(1.1);
   }
 
   /* Floating Names */
@@ -157,6 +171,11 @@
 </head>
 <body>
 
+<!-- Background Images -->
+<img src="love.png" id="loveImage" class="love-image" alt="Love Image">
+<img src="date.jpeg" id="dateImage" class="love-image" alt="Date Image">
+<img src="reject.jpeg" id="rejectImage" class="love-image" alt="Reject Image">
+
 <div class="card">
   <h1>For My Love ❤️</h1>
   <p><h2>Hii, This side your lover</h2>
@@ -168,6 +187,7 @@
   <div class="buttons">
     <button id="yes">Yes 💕</button>
     <button id="no">No 😜</button>
+    <button id="date">Date 💑</button>
   </div>
   <div class="love-message" id="loveMessage">
     Yay! You just made my heart the happiest ever! 💫💗  
@@ -180,18 +200,19 @@
   <div class="signature">– Yours forever 💌</div>
 </div>
 
-<!-- 💖 Love image (hidden initially) -->
-<img src="love.png" id="loveImage" class="love-image" alt="Love Image">
-
 <script>
 const noBtn = document.getElementById("no");
 const yesBtn = document.getElementById("yes");
+const dateBtn = document.getElementById("date");
 const loveMessage = document.getElementById("loveMessage");
 const brokenMessage = document.getElementById("brokenMessage");
 const loveImage = document.getElementById("loveImage");
+const dateImage = document.getElementById("dateImage");
+const rejectImage = document.getElementById("rejectImage");
 
 let loveAudio = new Audio("love.mp3");
 let rejectAudio = new Audio("reject.mp3");
+let dateAudio = new Audio("date.mp3");
 
 // Move "No" button away when mouse is close
 document.addEventListener("mousemove", (e) => {
@@ -212,10 +233,12 @@ document.addEventListener("mousemove", (e) => {
 // When clicking "Yes"
 yesBtn.addEventListener("click", () => {
   rejectAudio.pause();
-  rejectAudio.currentTime = 0;
-  brokenMessage.style.display = "none";
+  dateAudio.pause();
   loveMessage.style.display = "block";
+  brokenMessage.style.display = "none";
   loveImage.classList.add("show");
+  dateImage.classList.remove("show");
+  rejectImage.classList.remove("show");
   loveAudio.currentTime = 0;
   loveAudio.play();
   createBurstHearts();
@@ -225,13 +248,30 @@ yesBtn.addEventListener("click", () => {
 // When clicking "No"
 noBtn.addEventListener("click", () => {
   loveAudio.pause();
-  loveAudio.currentTime = 0;
-  rejectAudio.currentTime = 0;
-  rejectAudio.play();
+  dateAudio.pause();
   loveMessage.style.display = "none";
   brokenMessage.style.display = "block";
   loveImage.classList.remove("show");
+  dateImage.classList.remove("show");
+  rejectImage.classList.add("show");
+  rejectAudio.currentTime = 0;
+  rejectAudio.play();
   createBrokenHearts();
+});
+
+// When clicking "Date"
+dateBtn.addEventListener("click", () => {
+  loveAudio.pause();
+  rejectAudio.pause();
+  loveMessage.style.display = "none";
+  brokenMessage.style.display = "none";
+  loveImage.classList.remove("show");
+  rejectImage.classList.remove("show");
+  dateImage.classList.add("show");
+  dateAudio.currentTime = 0;
+  dateAudio.play();
+  createBurstHearts();
+  showFloatingNames("Let's Go on a Date 💑");
 });
 
 // Floating hearts
@@ -251,16 +291,16 @@ function createBurstHearts() {
   for (let i = 0; i < 100; i++) setTimeout(createHeart, i * 100);
 }
 
-// 💞 Floating Names
-function showFloatingNames() {
+// Floating Names
+function showFloatingNames(textMessage = "T ❤️ Y") {
   const text = document.createElement("div");
   text.classList.add("floating-text");
-  text.innerText = "T     ❤️      Y";
+  text.innerText = textMessage;
   document.body.appendChild(text);
   setTimeout(() => text.remove(), 5000);
 }
 
-// 💔 Broken Hearts fall animation
+// Broken Hearts fall animation
 function createBrokenHearts() {
   for (let i = 0; i < 15; i++) {
     const heart = document.createElement("div");
