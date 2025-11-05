@@ -1,176 +1,10 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="stylesheet" href="style.css">
 <title>For My Love ❤️</title>
-<style>
-  body {
-    margin: 0;
-    height: 100vh;
-    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    font-family: 'Poppins', sans-serif;
-    color: #fff;
-  }
-
-  .card {
-  background: rgba(255, 255, 255, 0.08); /* more transparent */
-  padding: 50px 70px;
-  border-radius: 25px;
-  box-shadow: 0 0 25px rgba(255, 255, 255, 0.2); /* softer glow */
-  backdrop-filter: blur(4px); /* reduced blur */
-  -webkit-backdrop-filter: blur(4px);
-  text-align: center;
-  max-width: 500px;
-  animation: fadeIn 2s ease;
-  position: relative;
-  z-index: 3;
-  border: 1px solid rgba(255, 255, 255, 0.2); /* adds subtle glass edge */
-}
-
-
-  h1, p, h2, .love-message, .broken-message, .signature {
-    font-weight: 700;
-  }
-
-  h1 { font-size: 2em; margin-bottom: 10px; }
-  p { font-size: 1.1em; line-height: 1.6; margin-bottom: 25px; }
-  .signature { margin-top: 10px; font-style: italic; color: #fff8f8; }
-  .buttons { margin-top: 20px; position: relative; height: 52px; }
-
-  button {
-    font-size: 1.1em;
-    border: none;
-    outline: none;
-    padding: 12px 25px;
-    margin: 10px;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: 0.3s;
-    position: absolute;
-  }
-
-  #yes {
-    background-color: #fff;
-    color: #ff4b6e;
-    left: 10px;
-    top: 0px;
-  }
-
-  #yes:hover {
-    background-color: #ff4b6e;
-    color: #fff;
-    transform: scale(1.1);
-  }
-
-  #no {
-    background-color: #ff4b6e;
-    color: #fff;
-    left: 120px;
-    top: 0px;
-  }
-
-  #date {
-    background-color: #ffffff;
-    color: #ff4b6e;
-    left: 230px;
-    top: 0px;
-  }
-
-  #date:hover {
-    background-color: #ff4b6e;
-    color: #fff;
-    transform: scale(1.1);
-  }
-
-  .heart {
-    position: fixed;
-    color: #ffdde1;
-    font-size: 24px;
-    animation: floatUp 6s linear infinite;
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  @keyframes floatUp {
-    0% { transform: translateY(0) scale(1); opacity: 1; }
-    100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.9); }
-    to { opacity: 1; transform: scale(1); }
-  }
-
-  .love-message, .broken-message {
-    display: none;
-    font-size: 1.5em;
-    margin-top: 20px;
-    animation: fadeIn 2s forwards;
-  }
-
-  .broken-message { color: #ff4b6e; }
-
-  /* ❤️ Fullscreen Image Styling */
-  .love-image {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(1);
-    width: 100vw;
-    height: 100vh;
-    object-fit: cover;
-    opacity: 0;
-    z-index: 1;
-    filter: brightness(0.7) blur(3px);
-    transition: opacity 1.5s ease, transform 8s ease;
-  }
-
-  .love-image.show {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1.1);
-  }
-
-  /* Floating Names */
-  .floating-text {
-    position: fixed;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 2em;
-    color: #fff;
-    font-weight: bold;
-    text-shadow: 0 0 20px #ffbfd1;
-    opacity: 0;
-    animation: floatNames 5s ease forwards;
-    z-index: 6;
-  }
-
-  @keyframes floatNames {
-    0% { opacity: 0; transform: translate(-50%, 0) scale(0.9); }
-    30% { opacity: 1; }
-    100% { transform: translate(-50%, -200px) scale(1.2); opacity: 0; }
-  }
-
-  /* Broken Hearts (falling down) */
-  .broken-heart {
-    position: fixed;
-    color: #ff4b6e;
-    font-size: 24px;
-    animation: fallDown 3s linear forwards;
-    pointer-events: none;
-    z-index: 4;
-  }
-
-  @keyframes fallDown {
-    0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-  }
-</style>
 </head>
 <body>
 
@@ -187,135 +21,42 @@
     and my heart fuller than I ever imagined. 💖
   </p>
   <h2>Will you be mine forever? 💞</h2>
+
   <div class="buttons">
     <button id="yes">Yes 💕</button>
     <button id="no">No 😜</button>
     <button id="date">Date 💑</button>
+    <button id="vault">Personal Vault 🔐</button>
   </div>
+
   <div class="love-message" id="loveMessage">
     Yay! You just made my heart the happiest ever! 💫💗  
     <br>Love you endlessly 😘
   </div>
+
   <div class="broken-message" id="brokenMessage">
     Oh no! You broke my heart 💔  
     <br>I hope you change your mind someday 😢
   </div>
+
+<!-- Hidden Vault Section -->
+<!-- Hidden Vault Section -->
+<div class="vault" id="vaultSection">
+  <h2>💞 Our Personal Vault 💞</h2>
+  <div id="vaultImages" class="vault-images">
+    <p>Loading images from cloud ☁️...</p>
+  </div>
+</div>
+
+<!-- Fullscreen image preview -->
+<div id="imageModal" class="image-modal">
+  <span id="closeModal" class="close">&times;</span>
+  <img id="modalImage" class="modal-content" alt="Full view">
+</div>
+
   <div class="signature">– Yours forever 💌</div>
 </div>
 
-<script>
-const noBtn = document.getElementById("no");
-const yesBtn = document.getElementById("yes");
-const dateBtn = document.getElementById("date");
-const loveMessage = document.getElementById("loveMessage");
-const brokenMessage = document.getElementById("brokenMessage");
-const loveImage = document.getElementById("loveImage");
-const dateImage = document.getElementById("dateImage");
-const rejectImage = document.getElementById("rejectImage");
-
-let loveAudio = new Audio("love.mp3");
-let rejectAudio = new Audio("reject.mp3");
-let dateAudio = new Audio("date.mp3");
-
-// Move "No" button away when mouse is close
-document.addEventListener("mousemove", (e) => {
-  const rect = noBtn.getBoundingClientRect();
-  const distance = Math.hypot(
-    e.clientX - (rect.left + rect.width / 2),
-    e.clientY - (rect.top + rect.height / 2)
-  );
-  if (distance < 100) {
-    const parentRect = noBtn.parentElement.getBoundingClientRect();
-    const maxX = parentRect.width - rect.width - 10;
-    const maxY = parentRect.height - rect.height - 10;
-    noBtn.style.left = `${Math.random() * maxX}px`;
-    noBtn.style.top = `${Math.random() * maxY}px`;
-  }
-});
-
-// When clicking "Yes"
-yesBtn.addEventListener("click", () => {
-  rejectAudio.pause();
-  dateAudio.pause();
-  loveMessage.style.display = "block";
-  brokenMessage.style.display = "none";
-  loveImage.classList.add("show");
-  dateImage.classList.remove("show");
-  rejectImage.classList.remove("show");
-  loveAudio.currentTime = 0;
-  loveAudio.play();
-  createBurstHearts();
-  showFloatingNames();
-});
-
-// When clicking "No"
-noBtn.addEventListener("click", () => {
-  loveAudio.pause();
-  dateAudio.pause();
-  loveMessage.style.display = "none";
-  brokenMessage.style.display = "block";
-  loveImage.classList.remove("show");
-  dateImage.classList.remove("show");
-  rejectImage.classList.add("show");
-  rejectAudio.currentTime = 0;
-  rejectAudio.play();
-  createBrokenHearts();
-});
-
-// When clicking "Date"
-dateBtn.addEventListener("click", () => {
-  loveAudio.pause();
-  rejectAudio.pause();
-  loveMessage.style.display = "none";
-  brokenMessage.style.display = "none";
-  loveImage.classList.remove("show");
-  rejectImage.classList.remove("show");
-  dateImage.classList.add("show");
-  dateAudio.currentTime = 0;
-  dateAudio.play();
-  createBurstHearts();
-  showFloatingNames("Let's Go on a Date 💑");
-});
-
-// Floating hearts
-function createHeart() {
-  const heart = document.createElement("div");
-  heart.classList.add("heart");
-  heart.innerHTML = "💗";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.animationDuration = Math.random() * 3 + 3 + "s";
-  heart.style.fontSize = Math.random() * 20 + 10 + "px";
-  document.body.appendChild(heart);
-  setTimeout(() => heart.remove(), 6000);
-}
-setInterval(createHeart, 200);
-
-function createBurstHearts() {
-  for (let i = 0; i < 100; i++) setTimeout(createHeart, i * 100);
-}
-
-// Floating Names
-function showFloatingNames(textMessage = "T ❤️ Y") {
-  const text = document.createElement("div");
-  text.classList.add("floating-text");
-  text.innerText = textMessage;
-  document.body.appendChild(text);
-  setTimeout(() => text.remove(), 5000);
-}
-
-// Broken Hearts fall animation
-function createBrokenHearts() {
-  for (let i = 0; i < 15; i++) {
-    const heart = document.createElement("div");
-    heart.classList.add("broken-heart");
-    heart.innerHTML = "💔";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.animationDuration = Math.random() * 2 + 2 + "s";
-    heart.style.fontSize = Math.random() * 20 + 15 + "px";
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 3000);
-  }
-}
-</script>
+<script src="script.js"></script>
 </body>
 </html>
