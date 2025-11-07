@@ -44,17 +44,51 @@ vaultBtn.addEventListener("click", async () => {
     const res = await fetch("/api/vault");
     const data = await res.json();
 
-    if (data.images && data.images.length > 0) {
-      vaultImagesDiv.innerHTML = "";
-      data.images.forEach((url) => {
-        const img = document.createElement("img");
-        img.src = url;
-        img.alt = "Vault image";
-        img.loading = "lazy";
-        img.addEventListener("click", () => openImageModal(url));
-        vaultImagesDiv.appendChild(img);
-      });
-    } else {
+vaultImagesDiv.innerHTML = "";
+
+if (data.images?.length > 0 || data.videos?.length > 0) {
+  // 🖼️ Display images
+  data.images?.forEach((url) => {
+    const img = document.createElement("img");
+    img.src = url;
+    img.alt = "Vault image";
+    img.loading = "lazy";
+    img.addEventListener("click", () => openImageModal(url));
+    vaultImagesDiv.appendChild(img);
+  });
+
+  // 🎞️ Display videos
+data.videos?.forEach((url) => {
+  // Create a wrapper for video + button
+  const videoContainer = document.createElement("div");
+  videoContainer.classList.add("video-container");
+
+  // Create the video element
+  const video = document.createElement("video");
+  video.src = url;
+  video.controls = true;
+  video.preload = "metadata";
+  video.classList.add("vault-video");
+
+  // Create fullscreen (square) button
+  const fullscreenBtn = document.createElement("button");
+  fullscreenBtn.innerHTML = "⬜";
+  fullscreenBtn.classList.add("fullscreen-btn");
+  fullscreenBtn.title = "Full view";
+
+  // Open fullscreen when button clicked
+  fullscreenBtn.addEventListener("click", () => {
+    openVideoModal(url);
+  });
+
+  // Add video and button into container
+  videoContainer.appendChild(video);
+  videoContainer.appendChild(fullscreenBtn);
+  vaultImagesDiv.appendChild(videoContainer);
+});
+
+}
+ else {
       vaultImagesDiv.innerHTML = "<p>No images found 😢</p>";
     }
   } catch (err) {
@@ -62,6 +96,43 @@ vaultBtn.addEventListener("click", async () => {
     console.error(err);
   }
 });
+
+
+// 🎞️ Video fullscreen modal
+const videoModal = document.createElement("div");
+videoModal.id = "videoModal";
+videoModal.className = "image-modal"; // reuse same modal style
+videoModal.innerHTML = `
+  <span id="closeVideoModal" class="close">&times;</span>
+  <video id="modalVideo" class="modal-content" controls></video>
+`;
+document.body.appendChild(videoModal);
+
+const modalVideo = document.getElementById("modalVideo");
+const closeVideoModal = document.getElementById("closeVideoModal");
+
+function openVideoModal(url) {
+  modalVideo.src = url;
+  videoModal.style.display = "flex";
+}
+
+closeVideoModal.addEventListener("click", () => {
+  modalVideo.pause();
+  videoModal.style.display = "none";
+});
+
+// Close when clicking outside
+videoModal.addEventListener("click", (e) => {
+  if (e.target === videoModal) {
+    modalVideo.pause();
+    videoModal.style.display = "none";
+  }
+});
+
+
+
+
+
 
 // Open modal
 function openImageModal(url) {

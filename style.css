@@ -1,107 +1,4 @@
 /* 🌸 General Page Styling */
-
-
-
-
-/* 🔐 Personal Vault Styling */
-
-
-
-/* Vault image grid */
-.vault-images {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 10px;
-  margin-top: 15px;
-}
-.vault-images img {
-  width: 100%;
-  height: 150px;
-  object-fit: cover;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-.vault-images img:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-}
-
-/* Fullscreen image modal */
-.image-modal {
-  display: none;
-  position: fixed;
-  z-index: 9999;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.85);
-  justify-content: center;
-  align-items: center;
-}
-.image-modal img {
-  max-width: 90%;
-  max-height: 90%;
-  border-radius: 15px;
-  box-shadow: 0 0 20px rgba(255,255,255,0.3);
-  animation: fadeIn 0.3s ease;
-}
-.close {
-  position: absolute;
-  top: 25px;
-  right: 40px;
-  font-size: 40px;
-  color: white;
-  cursor: pointer;
-}
-.close:hover {
-  color: #ff9a9e;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-
-
-
-.vault {
-  display: none;
-  margin-top: 25px;
-  text-align: center;
-  animation: fadeIn 1.5s ease;
-}
-
-.vault h2 {
-  color: #fff;
-  font-size: 1.5em;
-  margin-bottom: 15px;
-}
-
-.vault-images {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 15px;
-}
-
-.vault-images img {
-  width: 140px;
-  height: 140px;
-  object-fit: cover;
-  border-radius: 15px;
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.vault-images img:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
-}
-
-
 body {
   margin: 0;
   height: 100vh;
@@ -109,9 +6,10 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
+  overflow-y: auto;
   font-family: 'Poppins', sans-serif;
   color: #fff;
+  scroll-behavior: smooth;
 }
 
 /* 💌 Card Container */
@@ -207,7 +105,7 @@ button {
   transform: scale(1.1);
 }
 
-/* 💗 Love & Broken Messages */
+/* 💗 Messages */
 .love-message,
 .broken-message {
   display: none;
@@ -216,11 +114,9 @@ button {
   animation: fadeIn 2s forwards;
   line-height: 1.5;
 }
-.broken-message {
-  color: #ff4b6e;
-}
+.broken-message { color: #ff4b6e; }
 
-/* ❤️ Background Images */
+/* ❤️ Background Image */
 .love-image {
   position: fixed;
   top: 50%;
@@ -248,19 +144,12 @@ button {
   pointer-events: none;
   z-index: 1;
 }
-
 @keyframes floatUp {
-  0% {
-    transform: translateY(0) scale(1);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-100vh) scale(1.5);
-    opacity: 0;
-  }
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
 }
 
-/* 💬 Floating Text Animation */
+/* 💬 Floating Text */
 .floating-text {
   position: fixed;
   top: 60%;
@@ -274,50 +163,97 @@ button {
   animation: floatNames 5s ease forwards;
   z-index: 6;
 }
-
 @keyframes floatNames {
-  0% {
-    opacity: 0;
-    transform: translate(-50%, 0) scale(0.9);
-  }
-  30% {
-    opacity: 1;
-  }
-  100% {
-    transform: translate(-50%, -200px) scale(1.2);
-    opacity: 0;
-  }
-}
-
-/* 💔 Broken Hearts (falling) */
-.broken-heart {
-  position: fixed;
-  color: #ff4b6e;
-  font-size: 24px;
-  animation: fallDown 3s linear forwards;
-  pointer-events: none;
-  z-index: 4;
-}
-
-@keyframes fallDown {
-  0% {
-    transform: translateY(-20px) rotate(0deg);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(100vh) rotate(360deg);
-    opacity: 0;
-  }
+  0% { opacity: 0; transform: translate(-50%, 0) scale(0.9); }
+  30% { opacity: 1; }
+  100% { transform: translate(-50%, -200px) scale(1.2); opacity: 0; }
 }
 
 /* 🌟 Fade-in Animation */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* 🔐 Vault Section */
+.vault {
+  display: none;
+  margin-top: 25px;
+  text-align: center;
+  animation: fadeIn 1.5s ease;
+}
+
+.vault h2 {
+  color: #fff;
+  font-size: 1.5em;
+  margin-bottom: 15px;
+}
+
+/* Vault grid layout */
+.vault-images {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 15px;
+  margin-top: 15px;
+  padding: 10px;
+  justify-items: center;
+}
+
+/* Common styling for image & video thumbnails */
+.vault-images img,
+.vault-images video {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+.vault-images img:hover,
+.vault-images video:hover {
+  transform: scale(1.05);
+}
+
+/* Fullscreen modal */
+.image-modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.85);
+  justify-content: center;
+  align-items: center;
+}
+.image-modal img,
+.image-modal video {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(255,255,255,0.3);
+  animation: fadeIn 0.3s ease;
+}
+.close {
+  position: absolute;
+  top: 25px;
+  right: 40px;
+  font-size: 40px;
+  color: white;
+  cursor: pointer;
+}
+.close:hover { color: #ff9a9e; }
+
+/* 📱 Responsive */
+@media (max-width: 600px) {
+  .vault-images {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
   }
-  to {
-    opacity: 1;
-    transform: scale(1);
+  .vault-images img,
+  .vault-images video {
+    width: 120px;
+    height: 120px;
   }
 }

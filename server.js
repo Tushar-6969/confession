@@ -27,6 +27,7 @@ cloudinary.config({
 app.use(express.static(__dirname));
 
 // Cloudinary API route
+// server.js
 app.get("/api/vault", async (req, res) => {
   console.log("📸 Incoming request → /api/vault");
 
@@ -35,20 +36,25 @@ app.get("/api/vault", async (req, res) => {
     const result = await cloudinary.search
       .expression("folder:aif")
       .sort_by("public_id", "desc")
-      .max_results(30)
+      .max_results(50)
       .execute();
 
-    console.log(`✅ Found ${result.resources.length} images in 'aif'`);
+    console.log(`✅ Found ${result.resources.length} media files in 'aif'`);
 
-    const images = result.resources.map((img) => img.secure_url);
-    res.json({ images });
+    // Separate images and videos
+    const images = result.resources
+      .filter((file) => file.resource_type === "image")
+      .map((img) => img.secure_url);
+
+    const videos = result.resources
+      .filter((file) => file.resource_type === "video")
+      .map((vid) => vid.secure_url);
+
+    res.json({ images, videos });
   } catch (err) {
-    console.error("🚨 Error during Cloudinary fetch:");
-    console.error("Message:", err.message);
-    if (err.response && err.response.body) {
-      console.error("Cloudinary response:", err.response.body);
-    }
-    res.status(500).json({ error: "Failed to fetch images from Cloudinary" });
+    console.error("🚨 Error during Cloudinary fetch:", err.message);
+    if (err.response?.body) console.error("Cloudinary response:", err.response.body);
+    res.status(500).json({ error: "Failed to fetch media from Cloudinary" });
   }
 });
 
