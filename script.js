@@ -268,10 +268,16 @@ songsBtn.addEventListener("click", async () => {
   songsSection.style.display = "block";
   songsSection.scrollIntoView({ behavior: "smooth" });
   songsListDiv.innerHTML = "<p>Fetching songs from cloud ☁️...</p>";
-
   try {
-    const res = await fetch("/api/songs");
-    const data = await res.json();
+    // Try vault API first (if it includes songs)
+    let res = await fetch("/api/vault");
+    let data = await res.json();
+
+    if (!data.songs || data.songs.length === 0) {
+      // fallback to /api/songs
+      res = await fetch("/api/songs");
+      data = await res.json();
+    }
 
     if (!data.songs || data.songs.length === 0) {
       songsListDiv.innerHTML = "<p>No songs found 😢</p>";

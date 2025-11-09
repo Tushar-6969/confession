@@ -4,7 +4,7 @@ import { v2 as cloudinary } from "cloudinary";
 export default async function handler(req, res) {
   console.log("📸 GET /api/vault request received");
 
-  // ✅ Configure Cloudinary inside handler (important for Vercel)
+  // ✅ Configure Cloudinary (must be inside handler for Vercel)
   cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,
     api_key: process.env.API_KEY,
