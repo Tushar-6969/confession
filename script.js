@@ -285,19 +285,20 @@ songsBtn.addEventListener("click", async () => {
     }
 
     songsListDiv.innerHTML = ""; // clear loading text
+data.songs.forEach((item) => {
+  const url = item.url || item; // support both object and string
+  const songName = decodeURIComponent((item.name || url.split("/").pop()));
+  const btn = document.createElement("button");
+  btn.textContent = `▶️ ${songName}`;
+  btn.classList.add("song-btn");
+  btn.addEventListener("click", () => {
+    songPlayer.src = url;
+    songPlayer.style.display = "block";
+    songPlayer.play();
+  });
+  songsListDiv.appendChild(btn);
+});
 
-    data.songs.forEach((url) => {
-      const songName = decodeURIComponent(url.split("/").pop());
-      const btn = document.createElement("button");
-      btn.textContent = `▶️ ${songName}`;
-      btn.classList.add("song-btn");
-      btn.addEventListener("click", () => {
-        songPlayer.src = url;
-        songPlayer.style.display = "block";
-        songPlayer.play();
-      });
-      songsListDiv.appendChild(btn);
-    });
   } catch (err) {
     console.error("Error loading songs:", err);
     songsListDiv.innerHTML = "<p>Failed to load songs ⚠️</p>";
