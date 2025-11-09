@@ -58,6 +58,30 @@ app.get("/api/vault", async (req, res) => {
   }
 });
 
+
+
+// 🎵 Fetch songs from Cloudinary folder "song"
+app.get("/api/songs", async (req, res) => {
+  console.log("🎧 Request → /api/songs");
+  try {
+    const result = await cloudinary.search
+      .expression("folder:song AND resource_type:video") // mp3s are treated as "video" in Cloudinary
+      .sort_by("public_id", "desc")
+      .max_results(50)
+      .execute();
+
+    const songs = result.resources.map((file) => file.secure_url);
+    console.log(`🎶 Found ${songs.length} songs`);
+    res.json({ songs });
+  } catch (err) {
+    console.error("🚨 Error fetching songs:", err.message);
+    res.status(500).json({ error: "Failed to fetch songs from Cloudinary" });
+  }
+});
+
+
+
+
 // Main route
 app.get("/", (req, res) => {
   console.log("🌐 Serving index.html");

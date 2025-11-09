@@ -35,19 +35,16 @@ h1 {
   margin-bottom: 10px;
   font-weight: 700;
 }
-
 p {
   font-size: 1.1em;
   line-height: 1.6;
   margin-bottom: 25px;
   font-weight: 400;
 }
-
 h2 {
   font-weight: 700;
   margin-top: 20px;
 }
-
 .signature {
   margin-top: 15px;
   font-style: italic;
@@ -58,12 +55,13 @@ h2 {
 /* 💕 Buttons */
 .buttons {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   gap: 15px;
   margin-top: 25px;
   position: relative;
-  height: 60px;
+  height: auto;
 }
 
 button {
@@ -75,34 +73,28 @@ button {
   cursor: pointer;
   transition: 0.3s;
   position: relative;
-}
-
-#yes {
   background-color: #fff;
   color: #ff4b6e;
 }
-#yes:hover {
+button:hover {
+  transform: scale(1.1);
   background-color: #ff4b6e;
   color: #fff;
-  transform: scale(1.1);
 }
 
-#no {
-  background-color: #ff4b6e;
-  color: #fff;
-}
-#no:hover {
-  transform: scale(1.05);
-}
+#yes { background-color: #fff; color: #ff4b6e; }
+#no { background-color: #ff4b6e; color: #fff; }
+#date { background-color: #fff; color: #ff4b6e; }
+#vault { background-color: #fff; color: #ff4b6e; }
+#songs { background-color: #fff; color: #ff4b6e; }
 
-#date {
-  background-color: #fff;
-  color: #ff4b6e;
-}
-#date:hover {
+#no:hover,
+#yes:hover,
+#date:hover,
+#vault:hover,
+#songs:hover {
   background-color: #ff4b6e;
   color: #fff;
-  transform: scale(1.1);
 }
 
 /* 💗 Messages */
@@ -182,7 +174,6 @@ button {
   text-align: center;
   animation: fadeIn 1.5s ease;
 }
-
 .vault h2 {
   color: #fff;
   font-size: 1.5em;
@@ -246,8 +237,56 @@ button {
 }
 .close:hover { color: #ff9a9e; }
 
+/* 🎧 Songs Section */
+.songs {
+  display: none;
+  margin-top: 30px;
+  text-align: center;
+  animation: fadeIn 1.5s ease;
+}
+.songs h2 {
+  color: #fff;
+  font-size: 1.5em;
+  margin-bottom: 15px;
+}
+#songsList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+#songPlayer {
+  margin-top: 15px;
+  width: 80%;
+  max-width: 400px;
+  border-radius: 10px;
+}
+
+/* 🎵 Song Button */
+.song-btn {
+  display: block;
+  margin: 8px auto;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  background-color: #ff4d79;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.song-btn:hover {
+  background-color: #ff1f5a;
+  transform: scale(1.05);
+}
+
 /* 📱 Responsive */
 @media (max-width: 600px) {
+  .buttons {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
   .vault-images {
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
   }

@@ -251,3 +251,50 @@ function createBrokenHearts() {
     setTimeout(() => heart.remove(), 3000);
   }
 }
+
+// 🎵 Favorite Songs Feature
+const songsBtn = document.getElementById("songs");
+const songsSection = document.getElementById("songsSection");
+const songsListDiv = document.getElementById("songsList");
+const songPlayer = document.getElementById("songPlayer");
+
+songsSection.style.display = "none";
+
+songsBtn.addEventListener("click", async () => {
+  const confirmOpen = confirm("Want to listen to our favorite songs? 🎶");
+  if (!confirmOpen) return;
+
+  alert("Loading songs from the cloud ☁️");
+  songsSection.style.display = "block";
+  songsSection.scrollIntoView({ behavior: "smooth" });
+  songsListDiv.innerHTML = "<p>Fetching songs from cloud ☁️...</p>";
+
+  try {
+    const res = await fetch("/api/songs");
+    const data = await res.json();
+
+    if (!data.songs || data.songs.length === 0) {
+      songsListDiv.innerHTML = "<p>No songs found 😢</p>";
+      return;
+    }
+
+    songsListDiv.innerHTML = ""; // clear loading text
+
+    data.songs.forEach((url) => {
+      const songName = decodeURIComponent(url.split("/").pop());
+      const btn = document.createElement("button");
+      btn.textContent = `▶️ ${songName}`;
+      btn.classList.add("song-btn");
+      btn.addEventListener("click", () => {
+        songPlayer.src = url;
+        songPlayer.style.display = "block";
+        songPlayer.play();
+      });
+      songsListDiv.appendChild(btn);
+    });
+  } catch (err) {
+    console.error("Error loading songs:", err);
+    songsListDiv.innerHTML = "<p>Failed to load songs ⚠️</p>";
+  }
+});
+
