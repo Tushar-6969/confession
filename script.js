@@ -1,3 +1,4 @@
+// === Buttons & Elements ===
 const noBtn = document.getElementById("no");
 const yesBtn = document.getElementById("yes");
 const dateBtn = document.getElementById("date");
@@ -7,23 +8,28 @@ const loveImage = document.getElementById("loveImage");
 const dateImage = document.getElementById("dateImage");
 const rejectImage = document.getElementById("rejectImage");
 
+// === Audio Files ===
 let loveAudio = new Audio("love.mp3");
 let rejectAudio = new Audio("reject.mp3");
 let dateAudio = new Audio("date.mp3");
 
-// 🌸 Personal Vault Feature (Dynamic from Cloudinary)
-// 🌸 Personal Vault Feature (Dynamic from Cloudinary)
+// === Vault Section ===
 const vaultBtn = document.getElementById("vault");
 const vaultSection = document.getElementById("vaultSection");
 const vaultImagesDiv = document.getElementById("vaultImages");
 const correctPassword = "11112003";
 
+// === Modal Elements ===
 const imageModal = document.getElementById("imageModal");
 const modalImage = document.getElementById("modalImage");
 const closeModal = document.getElementById("closeModal");
 
-vaultSection.style.display = "none"; // hidden initially
+vaultSection.style.display = "none";
 
+// ✅ dynamic base URL fix for Vercel
+const apiBase = window.location.origin;
+
+// === Vault Button Click ===
 vaultBtn.addEventListener("click", async () => {
   const confirmOpen = confirm("Do you want to see the personal vault? 💌");
   if (!confirmOpen) return;
@@ -38,70 +44,59 @@ vaultBtn.addEventListener("click", async () => {
   vaultSection.style.display = "block";
   vaultSection.scrollIntoView({ behavior: "smooth" });
 
-  // Fetch images from your Node.js server (Cloudinary)
   vaultImagesDiv.innerHTML = "<p>Fetching photos from cloud ☁️...</p>";
+
   try {
-    const res = await fetch("/api/vault");
+    const res = await fetch(`${apiBase}/api/vault`);
     const data = await res.json();
 
-vaultImagesDiv.innerHTML = "";
+    vaultImagesDiv.innerHTML = "";
 
-if (data.images?.length > 0 || data.videos?.length > 0) {
-  // 🖼️ Display images
-  data.images?.forEach((url) => {
-    const img = document.createElement("img");
-    img.src = url;
-    img.alt = "Vault image";
-    img.loading = "lazy";
-    img.addEventListener("click", () => openImageModal(url));
-    vaultImagesDiv.appendChild(img);
-  });
+    if (data.images?.length > 0 || data.videos?.length > 0) {
+      // 🖼️ Display images
+      data.images?.forEach((url) => {
+        const img = document.createElement("img");
+        img.src = url;
+        img.alt = "Vault image";
+        img.loading = "lazy";
+        img.addEventListener("click", () => openImageModal(url));
+        vaultImagesDiv.appendChild(img);
+      });
 
-  // 🎞️ Display videos
-data.videos?.forEach((url) => {
-  // Create a wrapper for video + button
-  const videoContainer = document.createElement("div");
-  videoContainer.classList.add("video-container");
+      // 🎞️ Display videos
+      data.videos?.forEach((url) => {
+        const videoContainer = document.createElement("div");
+        videoContainer.classList.add("video-container");
 
-  // Create the video element
-  const video = document.createElement("video");
-  video.src = url;
-  video.controls = true;
-  video.preload = "metadata";
-  video.classList.add("vault-video");
+        const video = document.createElement("video");
+        video.src = url;
+        video.controls = true;
+        video.preload = "metadata";
+        video.classList.add("vault-video");
 
-  // Create fullscreen (square) button
-  const fullscreenBtn = document.createElement("button");
-  fullscreenBtn.innerHTML = "⬜";
-  fullscreenBtn.classList.add("fullscreen-btn");
-  fullscreenBtn.title = "Full view";
+        const fullscreenBtn = document.createElement("button");
+        fullscreenBtn.innerHTML = "⬜";
+        fullscreenBtn.classList.add("fullscreen-btn");
+        fullscreenBtn.title = "Full view";
+        fullscreenBtn.addEventListener("click", () => openVideoModal(url));
 
-  // Open fullscreen when button clicked
-  fullscreenBtn.addEventListener("click", () => {
-    openVideoModal(url);
-  });
-
-  // Add video and button into container
-  videoContainer.appendChild(video);
-  videoContainer.appendChild(fullscreenBtn);
-  vaultImagesDiv.appendChild(videoContainer);
-});
-
-}
- else {
-      vaultImagesDiv.innerHTML = "<p>No images found 😢</p>";
+        videoContainer.appendChild(video);
+        videoContainer.appendChild(fullscreenBtn);
+        vaultImagesDiv.appendChild(videoContainer);
+      });
+    } else {
+      vaultImagesDiv.innerHTML = "<p>No media found 😢</p>";
     }
   } catch (err) {
     vaultImagesDiv.innerHTML = "<p>Error loading images ⚠️</p>";
-    console.error(err);
+    console.error("Vault error:", err);
   }
 });
 
-
-// 🎞️ Video fullscreen modal
+// === Video Fullscreen Modal ===
 const videoModal = document.createElement("div");
 videoModal.id = "videoModal";
-videoModal.className = "image-modal"; // reuse same modal style
+videoModal.className = "image-modal";
 videoModal.innerHTML = `
   <span id="closeVideoModal" class="close">&times;</span>
   <video id="modalVideo" class="modal-content" controls></video>
@@ -121,7 +116,6 @@ closeVideoModal.addEventListener("click", () => {
   videoModal.style.display = "none";
 });
 
-// Close when clicking outside
 videoModal.addEventListener("click", (e) => {
   if (e.target === videoModal) {
     modalVideo.pause();
@@ -129,30 +123,23 @@ videoModal.addEventListener("click", (e) => {
   }
 });
 
-
-
-
-
-
-// Open modal
+// === Image Modal ===
 function openImageModal(url) {
   modalImage.src = url;
   imageModal.style.display = "flex";
 }
 
-// Close modal
 closeModal.addEventListener("click", () => {
   imageModal.style.display = "none";
 });
 
-// Close on background click
 imageModal.addEventListener("click", (e) => {
   if (e.target === imageModal) {
     imageModal.style.display = "none";
   }
 });
 
-// Move "No" button away when mouse is close
+// === "No" Button Floating Logic ===
 document.addEventListener("mousemove", (e) => {
   const rect = noBtn.getBoundingClientRect();
   const distance = Math.hypot(
@@ -168,7 +155,7 @@ document.addEventListener("mousemove", (e) => {
   }
 });
 
-// When clicking "Yes"
+// === Yes Button ===
 yesBtn.addEventListener("click", () => {
   rejectAudio.pause();
   dateAudio.pause();
@@ -183,7 +170,7 @@ yesBtn.addEventListener("click", () => {
   showFloatingNames();
 });
 
-// When clicking "No"
+// === No Button ===
 noBtn.addEventListener("click", () => {
   loveAudio.pause();
   dateAudio.pause();
@@ -197,7 +184,7 @@ noBtn.addEventListener("click", () => {
   createBrokenHearts();
 });
 
-// When clicking "Date"
+// === Date Button ===
 dateBtn.addEventListener("click", () => {
   loveAudio.pause();
   rejectAudio.pause();
@@ -212,7 +199,7 @@ dateBtn.addEventListener("click", () => {
   showFloatingNames("Let's Go on a Date 💑");
 });
 
-// Floating hearts
+// === Floating Hearts ===
 function createHeart() {
   const heart = document.createElement("div");
   heart.classList.add("heart");
@@ -229,7 +216,6 @@ function createBurstHearts() {
   for (let i = 0; i < 100; i++) setTimeout(createHeart, i * 100);
 }
 
-// Floating Names
 function showFloatingNames(textMessage = "T ❤️ Y") {
   const text = document.createElement("div");
   text.classList.add("floating-text");
@@ -238,7 +224,6 @@ function showFloatingNames(textMessage = "T ❤️ Y") {
   setTimeout(() => text.remove(), 5000);
 }
 
-// Broken Hearts fall animation
 function createBrokenHearts() {
   for (let i = 0; i < 15; i++) {
     const heart = document.createElement("div");
@@ -252,7 +237,7 @@ function createBrokenHearts() {
   }
 }
 
-// 🎵 Favorite Songs Feature
+// === Songs Section ===
 const songsBtn = document.getElementById("songs");
 const songsSection = document.getElementById("songsSection");
 const songsListDiv = document.getElementById("songsList");
@@ -268,14 +253,13 @@ songsBtn.addEventListener("click", async () => {
   songsSection.style.display = "block";
   songsSection.scrollIntoView({ behavior: "smooth" });
   songsListDiv.innerHTML = "<p>Fetching songs from cloud ☁️...</p>";
+
   try {
-    // Try vault API first (if it includes songs)
-    let res = await fetch("/api/vault");
+    let res = await fetch(`${apiBase}/api/vault`);
     let data = await res.json();
 
     if (!data.songs || data.songs.length === 0) {
-      // fallback to /api/songs
-      res = await fetch("/api/songs");
+      res = await fetch(`${apiBase}/api/songs`);
       data = await res.json();
     }
 
@@ -284,24 +268,22 @@ songsBtn.addEventListener("click", async () => {
       return;
     }
 
-    songsListDiv.innerHTML = ""; // clear loading text
-data.songs.forEach((item) => {
-  const url = item.url || item; // support both object and string
-  const songName = decodeURIComponent((item.name || url.split("/").pop()));
-  const btn = document.createElement("button");
-  btn.textContent = `▶️ ${songName}`;
-  btn.classList.add("song-btn");
-  btn.addEventListener("click", () => {
-    songPlayer.src = url;
-    songPlayer.style.display = "block";
-    songPlayer.play();
-  });
-  songsListDiv.appendChild(btn);
-});
-
+    songsListDiv.innerHTML = "";
+    data.songs.forEach((item) => {
+      const url = item.url || item;
+      const songName = decodeURIComponent(item.name || url.split("/").pop());
+      const btn = document.createElement("button");
+      btn.textContent = `▶️ ${songName}`;
+      btn.classList.add("song-btn");
+      btn.addEventListener("click", () => {
+        songPlayer.src = url;
+        songPlayer.style.display = "block";
+        songPlayer.play();
+      });
+      songsListDiv.appendChild(btn);
+    });
   } catch (err) {
     console.error("Error loading songs:", err);
     songsListDiv.innerHTML = "<p>Failed to load songs ⚠️</p>";
   }
 });
-
