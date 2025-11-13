@@ -2,7 +2,7 @@
   "name": "confession",
   "version": "1.0.0",
   "description": "A cute and interactive romantic webpage made with pure **HTML, CSS, and JavaScript** 💕  \r It features beautiful animations, sound effects, and playful button behavior to express your feelings in a unique way.",
-  "main": "script.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
