@@ -32,7 +32,7 @@ app.use(
     secret: "super_secret_key_123",
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false }, // Set true only if using HTTPS locally
+    cookie: { secure: false }, // true if using HTTPS
   })
 );
 
@@ -54,11 +54,7 @@ passport.use(
       clientID:
         "900088000170-9iql224cug0sbrjonf1sp54n2qambscr.apps.googleusercontent.com",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      // ✅ Use absolute URL for Vercel deployment
-      callbackURL:
-        process.env.NODE_ENV === "production"
-          ? "https://confession-mauve-nu.vercel.app/auth/google/callback"
-          : "http://localhost:3000/auth/google/callback",
+      callbackURL: "/auth/google/callback",
     },
     (accessToken, refreshToken, profile, done) => {
       const email = profile.emails?.[0]?.value;
@@ -131,24 +127,15 @@ app.use("/api/songs", songsRoute);
 // 🏠 Main Routes
 // =======================================
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "login.html"));
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
 app.get("/home.html", ensureAuth, (req, res) => {
-  res.sendFile(path.join(__dirname, "home.html"));
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
 // =======================================
 // 🚀 Start Server
 // =======================================
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-  console.log(
-    `🌐 OAuth Callback URL: ${
-      process.env.NODE_ENV === "production"
-        ? "https://confession-mauve-nu.vercel.app/auth/google/callback"
-        : "http://localhost:3000/auth/google/callback"
-    }`
-  );
-});
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
