@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Access Denied 🚫</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #ff4d4d, #ff9999);
+      font-family: "Poppins", sans-serif;
+      color: white;
+      text-align: center;
+    }
+
+    .box {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(8px);
+      max-width: 400px;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+    }
+
+    button {
+      background-color: white;
+      color: #ff4d4d;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #ffe6e6;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>🚫 Access Denied</h1>
+    <p>Only specific Google accounts are allowed to access this website.</p>
+    <p style="font-size: 0.95rem; opacity: 0.8;">
+      Please log in again using an authorized account.
+    </p>
+    <button onclick="window.location.href='/'">Return to Login</button>
+  </div>
+</body>
+</html>

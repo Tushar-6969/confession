@@ -1,10 +1,12 @@
-// /api/vault.js
+import express from "express";
 import { v2 as cloudinary } from "cloudinary";
 
-export default async function handler(req, res) {
+const router = express.Router();
+
+router.get("/", async (req, res) => {
   console.log("📸 GET /api/vault request received");
 
-  // ✅ Configure Cloudinary (must be inside handler for Vercel)
+  // ✅ Configure Cloudinary (safe for Vercel too)
   cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,
     api_key: process.env.API_KEY,
@@ -46,4 +48,6 @@ export default async function handler(req, res) {
       details: err.message,
     });
   }
-}
+});
+
+export default router;

@@ -1,10 +1,12 @@
-// /api/songs.js
+import express from "express";
 import { v2 as cloudinary } from "cloudinary";
 
-export default async function handler(req, res) {
+const router = express.Router();
+
+router.get("/", async (req, res) => {
   console.log("🎧 GET /api/songs request received");
 
-  // Must configure inside handler for Vercel
+  // Configure Cloudinary safely (Vercel compatible)
   cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,
     api_key: process.env.API_KEY,
@@ -33,4 +35,6 @@ export default async function handler(req, res) {
       details: err.message,
     });
   }
-}
+});
+
+export default router;
