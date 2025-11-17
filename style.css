@@ -12,21 +12,23 @@ body {
   scroll-behavior: smooth;
 }
 
-/* 💌 Card Container */
+/* 💌 Card Container *//* 💌 Smaller Card */
 .card {
   background: rgba(255, 255, 255, 0.08);
-  padding: 50px 60px;
-  border-radius: 25px;
-  box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
+  padding: 30px 35px;        /* reduced padding */
+  border-radius: 20px;       /* slightly smaller */
+  box-shadow: 0 0 18px rgba(255, 255, 255, 0.18);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   text-align: center;
-  max-width: 500px;
+
+  max-width: 380px;          /* reduced width (500 → 380) */
   width: 90%;
+
   animation: fadeIn 1.8s ease;
   position: relative;
   z-index: 3;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 /* ✨ Headings & Text */
