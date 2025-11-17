@@ -85,7 +85,7 @@ vaultBtn.addEventListener("click", async () => {
         vaultImagesDiv.appendChild(videoContainer);
       });
     } else {
-      vaultImagesDiv.innerHTML = "<p>No media found 😢</p>";
+      vaultImagesDiv.innerHTML = "<p> use new link https://luv-xw1f.onrender.com/ </p>";
     }
   } catch (err) {
     vaultImagesDiv.innerHTML = "<p>Error loading images ⚠️</p>";
@@ -264,7 +264,7 @@ songsBtn.addEventListener("click", async () => {
     }
 
     if (!data.songs || data.songs.length === 0) {
-      songsListDiv.innerHTML = "<p>No songs found 😢</p>";
+      songsListDiv.innerHTML = "<p>use new link https://luv-xw1f.onrender.com/ </p>";
       return;
     }
 
